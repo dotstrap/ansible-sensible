@@ -1,6 +1,6 @@
 ansible-sensible
 =========
-[![Build Status](https://travis-ci.org/mwilliammyers/ansible-sensible.svg?branch=master)](https://travis-ci.org/mwilliammyers/ansible-sensible)
+[![Build Status](https://travis-ci.org/dotstrap/ansible-sensible.svg?branch=master)](https://travis-ci.org/dotstrap/ansible-sensible)
 
 > Basic shell settings for Linux & OS X
 
@@ -25,7 +25,7 @@ Example Playbook
 ```
     - hosts: servers
       roles:
-         - { role: mwilliammyers.sensible }
+         - { role: dotstrap.sensible }
 ```
 
 Notes
