@@ -18,7 +18,9 @@
   when: ansible_user_shell | match(".*\/(bash|zsh)")
   tags:
     - bootstrap
+    - bootstrap_sensible
     - configure
+    - configure_sensible
 
 - block:
   - name: fish | setup
@@ -34,4 +36,6 @@
   when: ansible_user_shell | match(".*\/(fish)")
   tags:
     - bootstrap
+    - bootstrap_sensible
     - configure
+    - configure_sensible
