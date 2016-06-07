@@ -2,3 +2,11 @@
 
 default_shell_data_dir: "{{ xdg_data_home }}/bash"
 default_shell_config_file: "{{ ansible_user_dir }}/.bash_profile"
+
+sensible_default_histfile: "{{ xdg_cache_home }}/.bash_history"
+
+sensible_shell_specific_config_block: |
+  # History
+  export HISTFILE="{{ sensible_histfile }}"
+  export HISTSIZE={{ sensible_histfilesize }}
+  export HISTFILESIZE={{ sensible_histfilesize }}

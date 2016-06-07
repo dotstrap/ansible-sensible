@@ -3,24 +3,14 @@
 # The state in which settings are written
 # choices: [ present, absent ]
 configure_state: present
-
 sensible_configure_state: "{{ configure_state }}"
-
-# The marker line (which surrounds the text block) sensible.
-# "{mark}" will be replaced with "BEGIN" or "END".
-# "{item}" will be replaced with the corresponding item eg. "ls" or "cd"
-# Note: both {mark} and {item} MUST be present
-sensible_marker: "#####=== {mark} Ansible managed sensible {item} settings ===#####"
 
 # default:
 #   - bash: ~/.bash_profile
 #   - zsh: ~/.zshrc
 #   - fish: ~/.config/fish/config.fish
 shell_config_file: "{{ default_shell_config_file }}"
-
 sensible_config_file: "{{ shell_config_file }}"
-
-# sensible_config_dir: "{{ xdg_config_home }}/sensible"
 
 # The base directory relative to which shell specific data files should be stored
 # default:
@@ -28,6 +18,17 @@ sensible_config_file: "{{ shell_config_file }}"
 #   - zsh: $xdg_data_home/zsh/
 #   - fish: ~/.config/fish/
 shell_data_dir: "{{ default_shell_data_dir }}"
+
+sensible_histfile: "{{ sensible_default_histfile }}"
+
+# Number of lines to save in the shell's history file
+sensible_histfilesize: 10000
+
+# The marker line (which surrounds the text block) sensible.
+# "{mark}" will be replaced with "BEGIN" or "END".
+# "{item}" will be replaced with the corresponding item eg. "ls" or "cd"
+# Note: both {mark} and {item} MUST be present
+sensible_marker: "#####=== {mark} Ansible managed sensible settings ===#####"
 
 #####=== XDG variables ===#####
 # http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
@@ -48,29 +49,23 @@ xdg_cache_home: "{{ ansible_env.XDG_CACHE_HOME | default(default_xdg_cache_home)
 
 # TODO move marker to the loop in tasks/main.yml if ansible allows for
 # variables (ie. item.key) within the replacement string in regex_replace
-sensible_aliases:
-  ls:
-    marker: "{{ sensible_marker | regex_replace('{item}', 'ls') }}"
-    config_block: |
-      alias ll='ls -lh'
-      alias la='ls -lha'
-  cd:
-    marker: "{{ sensible_marker | regex_replace('{item}', 'cd') }}"
-    config_block: |
-      alias ..='cd ..'
-      alias ...='cd ../..'
-      alias ....='cd ../../..'
-      alias .....='cd ../../../..'
-  grep:
-    marker: "{{ sensible_marker | regex_replace('{item}', 'grep') }}"
-    config_block: |
-      alias grep='grep --color=auto'
-      alias fgrep='fgrep --color=auto'
-      alias egrep='egrep --color=auto'
-  ip:
-    marker: "{{ sensible_marker | regex_replace('{item}', 'ip') }}"
-    config_block: |
-      alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+sensible_config_block: |
+  # Aliases
+  alias ll='ls -lh'
+  alias la='ls -lha'
+
+  alias ..='cd ..'
+  alias ...='cd ../..'
+  alias ....='cd ../../..'
+  alias .....='cd ../../../..'
+
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+
+  alias ip='dig +short myip.opendns.com @resolver1.opendns.com'
+
+  {{ sensible_shell_specific_config_block }}
 
 sensible_fish_functions:
   ip:

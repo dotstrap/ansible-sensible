@@ -12,9 +12,8 @@
       create: yes
       backup: no
       state: "{{ sensible_configure_state }}"
-      marker: "{{ item.value.marker }}"
-      block: "{{ item.value.config_block }}"
-    with_dict: "{{ sensible_aliases }}"
+      marker: "{{ sensible_marker }}"
+      block: "{{ sensible_config_block }}"
   when: ansible_user_shell | match(".*\/(bash|zsh)")
   tags:
     - bootstrap
