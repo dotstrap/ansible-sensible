@@ -21,20 +21,20 @@
     - configure
     - configure_sensible
 
-- block:
-  - name: fish | setup
-    file: dest="{{ shell_data_dir }}/functions" state=directory
+# - block:
+  # - name: fish | setup
+    # file: dest="{{ shell_data_dir }}/functions" state=directory
 
-  - name: fish | configure | functions
-    template:
-      src: fish_function.j2
-      dest: "{{ shell_data_dir }}/functions/{{ item.key }}.fish"
-      force: yes
-      backup: no
-    with_dict: "{{ sensible_fish_functions }}"
-  when: ansible_user_shell | match(".*\/(fish)")
-  tags:
-    - bootstrap
-    - bootstrap_sensible
-    - configure
-    - configure_sensible
+  # - name: fish | configure | functions
+    # template:
+      # src: fish_function.j2
+      # dest: "{{ shell_data_dir }}/functions/{{ item.key }}.fish"
+      # force: yes
+      # backup: no
+    # with_dict: "{{ sensible_fish_functions }}"
+  # when: ansible_user_shell | match(".*\/(fish)")
+  # tags:
+    # - bootstrap
+    # - bootstrap_sensible
+    # - configure
+    # - configure_sensible
